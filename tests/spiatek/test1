@@ -1,0 +1,354 @@
+#!/bin/bash
+
+echo '----------------------------------------------'
+echo '---           Tworzenie katalogów          ---'
+echo '----------------------------------------------'
+echo -e "\n"
+
+mkdir filesystem 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmkdir error\n"
+fi
+
+mkdir filesystem/dir1 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmkdir error\n"
+fi
+
+mkdir filesystem/dir2 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmkdir error\n"
+fi
+
+mkdir filesystem/dir3 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmkdir error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---      Tworzenie struktury katalogów     ---'
+echo '----------------------------------------------'
+echo -e "\n"
+
+mkdir filesystem/dir1/dir4 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmkdir error\n"
+fi
+
+mkdir filesystem/dir1/dir5 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmkdir error\n"
+fi
+
+mkdir filesystem/dir2/dir6 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmkdir error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---            Tworzenie plików            ---'
+echo '----------------------------------------------'
+echo -e "\n"
+
+touch filesystem/dir3/file1 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ntouch error\n"
+fi
+
+touch filesystem/dir3/file2 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ntouch error\n"
+fi
+
+touch filesystem/dir3/file3 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ntouch error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---      Wyświetlenie pustych plików       ---'
+echo '----------------------------------------------'
+
+cat filesystem/dir3/file1 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\ncat error\n"
+fi
+
+echo '----------------------------------------------'
+echo '---       Próba wyświetlenia katalogu      ---'
+echo '----------------------------------------------'
+
+cat filesystem/dir1/dir4 2> /dev/null
+
+if [ $? -eq 0 ] 
+then 
+  echo -e "\ncat error\n"
+fi
+
+echo '----------------------------------------------'
+echo '---          Zmiana nazwy plików           ---'
+echo '----------------------------------------------'
+
+mv filesystem/dir1 filesystem/folder1 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/dir2 filesystem/folder2 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/dir3 filesystem/folder3 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder3/file1 filesystem/folder3/plik1 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder3/file2 filesystem/folder3/plik2 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder3/file3 filesystem/folder3/plik3 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder1/dir4 filesystem/folder1/folder4 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder1/dir5 filesystem/folder1/folder5 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder2/dir6 filesystem/folder2/folder6 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmv error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---          Przenoszenie plików           ---'
+echo '----------------------------------------------'
+
+mv filesystem/folder3/plik1 filesystem/folder2 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder3/plik2 filesystem/folder2 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder3/plik3 filesystem/folder2 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder2/folder6 filesystem 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+mv filesystem/folder2/* filesystem/folder6 2> /dev/null
+
+if [ $? -ne 0 ] 
+then 
+  echo -e "\nmv error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---           Kopiowanie plików            ---'
+echo '----------------------------------------------'
+
+cp filesystem/folder6/plik1 filesystem/folder1 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ncp error\n"
+fi
+
+cp filesystem/folder6/plik2 filesystem/folder1 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ncp error\n"
+fi
+
+cp filesystem/folder6/plik3 filesystem/folder1 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ncp error\n"
+fi
+
+cp filesystem/folder6/plik1 filesystem 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ncp error\n"
+fi
+
+cp filesystem/folder6/* filesystem/folder1/folder4 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\ncp error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---             Usuwanie plików            ---'
+echo '----------------------------------------------'
+
+rm filesystem/folder1/plik* 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nrm error\n"
+fi
+
+rm -R filesystem/folder1/folder4 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nrm error\n"
+fi
+
+echo '----------------------------------------------'
+echo '---         Próba usunięcia katalogu       ---'
+echo '----------------------------------------------'
+
+rm folder3 2&> /dev/null
+
+if [ $? -eq 0 ]
+then 
+  echo -e "\nrm error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---                Montowanie              ---'
+echo '----------------------------------------------'
+
+sudo mount /dev/sda1 filesystem/folder1/folder5 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nmount error\n"
+fi
+
+sleep 10
+
+echo '----------------------------------------------'
+echo '---              Demontowanie              ---'
+echo '----------------------------------------------'
+
+sudo umount filesystem/folder1/folder5 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\numount error\n"
+fi
+
+echo '----------------------------------------------'
+echo '---          Utworzenie dowiązania         ---'
+echo '----------------------------------------------'
+
+ln -s filesystem/folder1 filesystem/link1 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nln error\n"
+fi
+
+./test_ls_tree
+
+echo '----------------------------------------------'
+echo '---        Usuwanie systemu plików         ---'
+echo '----------------------------------------------'
+
+rm -R filesystem/* 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nrm error\n"
+fi
+
+./test_ls_tree
+
+rm -R filesystem 2> /dev/null
+
+if [ $? -ne 0 ]
+then 
+  echo -e "\nrm error\n"
+fi
+
