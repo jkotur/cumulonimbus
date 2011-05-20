@@ -299,25 +299,25 @@ echo '----------------------------------------------'
 echo '---                Montowanie              ---'
 echo '----------------------------------------------'
 
-sudo mount /dev/sda1 filesystem/folder1/folder5 2> /dev/null
+#sudo mount ? filesystem/folder1/folder5 2> /dev/null
 
-if [ $? -ne 0 ]
-then 
-  echo -e "\nmount error\n"
-fi
-
-sleep 10
+#if [ $? -ne 0 ]
+#then 
+#  echo -e "\nmount error\n"
+#fi
+#
+#sleep 10
 
 echo '----------------------------------------------'
 echo '---              Demontowanie              ---'
 echo '----------------------------------------------'
 
-sudo umount filesystem/folder1/folder5 2> /dev/null
-
-if [ $? -ne 0 ]
-then 
-  echo -e "\numount error\n"
-fi
+#sudo umount filesystem/folder1/folder5 2> /dev/null
+#
+#if [ $? -ne 0 ]
+#then 
+#  echo -e "\numount error\n"
+#fi
 
 echo '----------------------------------------------'
 echo '---          Utworzenie dowiązania         ---'
@@ -335,6 +335,8 @@ fi
 echo '----------------------------------------------'
 echo '---        Usuwanie systemu plików         ---'
 echo '----------------------------------------------'
+
+rm filesystem/link1
 
 rm -R filesystem/* 2> /dev/null
 
