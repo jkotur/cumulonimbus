@@ -13,6 +13,7 @@ from datetime import datetime
 # Logging actions
 import logging
 from inspect import stack
+from traceback import format_exc
 
 LOG_FILENAME = "LOG"
 logging.basicConfig(filename=LOG_FILENAME,level=logging.INFO,)
@@ -20,20 +21,6 @@ logging.basicConfig(filename=LOG_FILENAME,level=logging.INFO,)
 
 # FUSE version at the time of writing. Be compatible with this version.
 fuse.fuse_python_api = (0, 2)
-
-#class Stat( fuse.Stat ):
-#    def __init__( self ):
-#        self.st_ino = 0
-#        self.st_dev = 0
-#        self.st_mode = stat.S_IFDIR | 0777 # full access dir TODO: change
-#        self.st_nlink = 2 # 2 hardlinks, as for empty dir  TODO: change
-#        self.st_uid = os.getuid() # current uid TODO: change
-#        self.st_gid = os.getgid() # current gid TODO: change
-#        self.st_size = 4096 # dirsize TODO: change
-#        now = 0 # datetime.utcnow()
-#        self.st_atime = now
-#        self.st_mtime = now
-#        self.st_ctime = now
 
 class CFuse( fuse.Fuse ):
     """
@@ -163,15 +150,42 @@ class CFuse( fuse.Fuse ):
         if not retval is None:
             raise ErrnoException(retval)
 
+    def symlink(self, target, name):
+        return self._handle(self._symlink, target, name)
+
+    def _symlink(self, target, name):
+        retval = self.fs.symlink(target, name)
+        if not retval is None:
+            raise ErrnoException( retval )
+
+    def unlink(self, path):
+        return self._handle(self._unlink, path)
+
+    def _unlink(self, path):
+        retval = self.fs.unlink( path )
+        if not retval is None:
+            raise ErrnoException( retval )
+
+    def readlink(self, path):
+        return self._handle(self._readllink, path)
+
+    def _readllink(self, path):
+        retval = self.fs.read(path)
+        if not isinstance(retval, str):
+            raise ErrnoException( retval )
+        return retval
+
     def _handle(self, method, *args):
         name = stack()[1][3]
         logging.info("[%s][init] <- %s" % (name, map(str, args)))
         try:
             retval = method( *args )
         except ErrnoException as e:
+            logging.info("[%s][errno] -> %s" % (name, e.errno))
             return e.errno
         except Exception as e:
-            logging.error("[%s][exception] %s" % (name, str(e)))
+            logging.error("[%s][exception] %s: %s" % (name, e.__class__.__name__, str(e)))
+            logging.error(format_exc())
             return -errno.EINVAL
         else:
             logging.info("[%s][done] -> %s" % (name, str(retval)))
