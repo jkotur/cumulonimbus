@@ -171,7 +171,7 @@ class FS:
             elif not err is None:
                 # Not good, this isn't an error we're expecting to encounter.
                 raise Exception(repr(err))
-        self.swift.rm(src)
+        self.swift.rm(src,recursive=True)
         assert(not self.swift.get(dst).children is None)
 
     def _mv_file(self, src, dst):
