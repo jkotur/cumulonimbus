@@ -130,6 +130,9 @@ class CFuse( fuse.Fuse ):
             return 0
         raise ErrnoException( retval )
 
+    def create(self, path, mode, rdev):
+        return self._handle(self._mknod, path, mode, rdev)
+
     def chown( self, path, uid, gid ):
         return self._handle( self._chown, path, uid, gid )
     
@@ -182,6 +185,77 @@ class CFuse( fuse.Fuse ):
         if not isinstance(retval, str):
             raise ErrnoException( retval )
         return retval
+
+    def read(self, path, size, offset, fh=None):
+        return self._handle(self._read, path, size, offset)
+
+    def _read(self, path, size, offset):
+        retval = self.fs.read(path)
+        if not isinstance(retval, str):
+            raise ErrnoException( retval )
+        return retval[offset:offset+size]
+
+    def write(self, path, buf, offset, fh=None):
+        return self._handle(self._write, path, buf, offset)
+
+    def _write(self, path, buf, offset):
+        bufsize = len(buf)
+        content = self.fs.read(path)
+        if not isinstance(content, str):
+            raise ErrnoException(content)
+        content = content[0:offset] + buf + content[offset+bufsize:]
+        retval = self.fs.write(path, content)
+        if not retval is None:
+            raise ErrnoException( retval )
+        return len(buf) # TODO: something other than a fake success?
+
+    def truncate(self, path, size):
+        return self._handle( self._truncate, path, size)
+
+    def _truncate(self, path, size):
+        if size != 0:
+            raise ErrnoException( -errno.EOPNOTSUPP )
+
+    def ftruncate(self, path, size, fh=None):
+        return self._handle(self._ftruncate, path, size)
+        
+    def _ftruncate(self, path, size):
+        return -errno.EOPNOTSUPP
+
+    def flush(self, path, fh=None):
+        return self._handle(self._flush, path)
+
+    def _flush(self, path):
+        pass # return -errno.EOPNOTSUPP
+
+    def fsync(self, path, datasync, fh=None):
+        return self._handle(self._fsync, path, datasync)
+
+    def _fsync(self, path, datasync):
+        return -errno.EOPNOTSUPP
+
+    def release(self, path, flags, fh=None):
+        return self._handle(self._release, path, flags)
+
+    def _release(self, path, flags):
+        pass # return 0 # -errno.EOPNOTSUPP
+
+    def fgetattr(self, path):
+        return self._handle(self._getattr, path)
+
+    def open(self, path, flags):
+        return self._handle(self._open, path, flags)
+
+    def _open(self, path, flags):
+        retval = self.fs.access( path, flags )
+        if retval != 0:
+            raise ErrnoException(retval)
+
+    def getxattr(self, *args, **kwargs):
+        return self._handle(self._getxattr, *args, **kwargs)
+
+    def _getxattr(self, *args, **kwargs):
+        return -errno.EOPNOTSUPP
 
     def _handle(self, method, *args):
         name = stack()[1][3]
