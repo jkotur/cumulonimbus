@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import sys, os
+
+if (os.path.exists(os.path.dirname(__file__) + "/../README.rst")):
+    # Running from source, we need to point Python to cumulonimbus' location.
+    sys.path.insert(0, os.path.dirname(__file__) + "/..")
+
+from cumulonimbus.cfuse import CFuse
+from cumulonimbus.fs import FS
+from cumulonimbus.cloud import Swift
+
+cfuse = CFuse(dash_s_do='setsingle')
+cfuse.parse(errex=1)
+cfuse.multithreaded = 0
+cmd = cfuse.cmdline[0]
+swift = Swift(cmd.authurl, cmd.user, cmd.key)
+cfuse.fs = FS(swift)
+cfuse.main()

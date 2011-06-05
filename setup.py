@@ -9,6 +9,7 @@ setup(
     long_description = 'See README.rst',
     author = 'Cumulonimbus Team',
     url = 'https://github.com/Monar/cumulonimbus',
-    packages = [],
+    packages = ['cumulonimbus'],
+    scripts = ['scripts/cumulonimbus'],
     license = 'GPL 3.0',
     )
