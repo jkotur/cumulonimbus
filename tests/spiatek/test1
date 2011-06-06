@@ -11,7 +11,8 @@ echo -e "\n"
 
 python ~/cumulonimbus/cumulonimbus/cfuse.py filesystem -o authurl='http://127.0.0.1:8080/auth/v1.0' -o user='test:tester' -o key='testing'
 
-if [ $? -ne 0 ]; then 
+if [ $? -ne 0 ]
+then 
 	exit 1
 fi
 
@@ -24,28 +25,28 @@ mkdir filesystem 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nmkdir error\n"
+  echo -e "\n$LINENO: mkdir error\n"
 fi
 
 mkdir filesystem/dir1 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmkdir error\n"
+  echo -e "\n$LINENO: mkdir error\n"
 fi
 
 mkdir filesystem/dir2 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmkdir error\n"
+  echo -e "\n$LINENO: mkdir error\n"
 fi
 
 mkdir filesystem/dir3 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmkdir error\n"
+  echo -e "\n$LINENO: mkdir error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -59,21 +60,21 @@ mkdir filesystem/dir1/dir4 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nmkdir error\n"
+  echo -e "\n$LINENO: mkdir error\n"
 fi
 
 mkdir filesystem/dir1/dir5 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmkdir error\n"
+  echo -e "\n$LINENO: mkdir error\n"
 fi
 
 mkdir filesystem/dir2/dir6 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nmkdir error\n"
+  echo -e "\n$LINENO: mkdir error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -87,21 +88,21 @@ touch filesystem/dir3/file1 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ntouch error\n"
+  echo -e "\n$LINENO: touch error\n"
 fi
 
 touch filesystem/dir3/file2 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ntouch error\n"
+  echo -e "\n$LINENO: touch error\n"
 fi
 
 touch filesystem/dir3/file3 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ntouch error\n"
+  echo -e "\n$LINENO: touch error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -114,7 +115,7 @@ cat filesystem/dir3/file1 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\ncat error\n"
+  echo -e "\n$LINENO: cat error\n"
 fi
 
 echo '----------------------------------------------'
@@ -125,7 +126,7 @@ cat filesystem/dir1/dir4 2> /dev/null
 
 if [ $? -eq 0 ] 
 then 
-  echo -e "\ncat error\n"
+  echo -e "\n$LINENO: cat error\n"
 fi
 
 echo '----------------------------------------------'
@@ -136,63 +137,63 @@ mv filesystem/dir1 filesystem/folder1 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/dir2 filesystem/folder2 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/dir3 filesystem/folder3 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder3/file1 filesystem/folder3/plik1 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder3/file2 filesystem/folder3/plik2 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder3/file3 filesystem/folder3/plik3 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder1/dir4 filesystem/folder1/folder4 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder1/dir5 filesystem/folder1/folder5 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder2/dir6 filesystem/folder2/folder6 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -205,35 +206,35 @@ mv filesystem/folder3/plik1 filesystem/folder2 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder3/plik2 filesystem/folder2 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder3/plik3 filesystem/folder2 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder2/folder6 filesystem 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 mv filesystem/folder2/* filesystem/folder6 2> /dev/null
 
 if [ $? -ne 0 ] 
 then 
-  echo -e "\nmv error\n"
+  echo -e "\n$LINENO: mv error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -246,35 +247,35 @@ cp filesystem/folder6/plik1 filesystem/folder1 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ncp error\n"
+  echo -e "\n$LINENO: cp error\n"
 fi
 
 cp filesystem/folder6/plik2 filesystem/folder1 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ncp error\n"
+  echo -e "\n$LINENO: cp error\n"
 fi
 
 cp filesystem/folder6/plik3 filesystem/folder1 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ncp error\n"
+  echo -e "\n$LINENO: cp error\n"
 fi
 
 cp filesystem/folder6/plik1 filesystem 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ncp error\n"
+  echo -e "\n$LINENO: cp error\n"
 fi
 
 cp filesystem/folder6/* filesystem/folder1/folder4 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\ncp error\n"
+  echo -e "\n$LINENO: cp error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -287,14 +288,14 @@ rm filesystem/folder1/plik* 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nrm error\n"
+  echo -e "\n$LINENO: rm error\n"
 fi
 
 rm -R filesystem/folder1/folder4 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nrm error\n"
+  echo -e "\n$LINENO: rm error\n"
 fi
 
 echo '----------------------------------------------'
@@ -305,7 +306,7 @@ rm folder3 2&> /dev/null
 
 if [ $? -eq 0 ]
 then 
-  echo -e "\nrm error\n"
+  echo -e "\n$LINENO: rm error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -318,7 +319,7 @@ ln -s filesystem/folder1 filesystem/link1 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nln error\n"
+  echo -e "\n$LINENO: ln error\n"
 fi
 
 bash $SHDIR/test_ls_tree
@@ -333,7 +334,7 @@ rm -R filesystem/* 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nrm error\n"
+  echo -e "\n$LINENO: rm error\n"
 fi
 
 $SHDIR/test_ls_tree
@@ -342,7 +343,7 @@ rm -R filesystem 2> /dev/null
 
 if [ $? -ne 0 ]
 then 
-  echo -e "\nrm error\n"
+  echo -e "\n$LINENO: rm error\n"
 fi
 
 echo '----------------------------------------------'
