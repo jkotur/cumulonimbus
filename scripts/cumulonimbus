@@ -14,6 +14,7 @@ cfuse = CFuse(dash_s_do='setsingle')
 cfuse.parse(errex=1)
 cfuse.multithreaded = 0
 cmd = cfuse.cmdline[0]
+if None in ( cmd.authurl , cmd.user , cmd.key ) : sys.exit(0)
 swift = Swift(cmd.authurl, cmd.user, cmd.key)
 cfuse.fs = FS(swift)
 cfuse.main()
